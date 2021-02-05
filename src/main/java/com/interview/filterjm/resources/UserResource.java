@@ -3,6 +3,8 @@ package com.interview.filterjm.resources;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,10 @@ import com.interview.filterjm.domain.User;
 import com.interview.filterjm.services.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api/users")
@@ -32,6 +37,19 @@ public class UserResource {
 		map.put("message", "User added successfully");
 		return new ResponseEntity<>(map, HttpStatus.OK);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<User> getUserById(HttpServletRequest request, @PathVariable("id") Integer id) {
+		User user = userService.getUserById(id);
+		return new ResponseEntity<>(user, HttpStatus.OK);	
+	}
+	
+	@GetMapping("")
+	public ResponseEntity<List<User>> getAllUsers(HttpServletRequest request) {
+		List<User> users = userService.getAllUsers();
+		return new ResponseEntity<>(users,HttpStatus.OK);
+	}
+	
 	
 	
 	

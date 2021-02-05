@@ -3,6 +3,7 @@ package com.interview.filterjm.repositories;
 //import java.beans.Statement;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -13,12 +14,14 @@ import org.springframework.stereotype.Repository;
 
 import com.interview.filterjm.domain.User;
 import com.interview.filterjm.exceptions.UserException;
+import com.interview.filterjm.exceptions.UserResourceNotFoundException;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository{
 	private static final String SQL_CREATE = "insert into users (id, firstname, surname, role, age) values (nextval('users_id_seq'),?,?,?,?)";
 	private static final String SQL_COUNT_BY_FIRST_SUR = "select count(*) from users where firstname=? and surname=?";
 	private static final String SQL_FIND_BY_ID = "select id, firstname, surname, role, age from users where id=?";
+	private static final String SQL_GET_ALL = "select id, firstname, surname, role, age from users";
 	
 	
 	@Autowired
@@ -47,25 +50,22 @@ public class UserRepositoryImpl implements UserRepository{
 	}
 
 	@Override
-	public User findByFirstNameAndSurName(String firstName, String surName) throws UserException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<User> getAllUsers() throws UserException {		
+		return jdbcTemplate.query(SQL_GET_ALL, userRowMapper);
 	}
 
 	@Override
-	public Integer getCountByAge(Integer age) {
-		// TODO Auto-generated method stub
-		return null;
+	public User getUserById(Integer id) throws UserResourceNotFoundException {
+		try {
+			return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, userRowMapper, id);
+		} catch (Exception e) {
+			throw new UserResourceNotFoundException("User Not found.");
+		}
 	}
-
-	@Override
-	public User findById(Integer id) {
-		return jdbcTemplate.queryForObject(SQL_FIND_BY_ID, new Object[] {id}, userRowMapper);
-	}
-
+	
 	@Override
 	public Integer getCountByFirstNameAndSurname(String firstName, String surName) {
-		return jdbcTemplate.queryForObject(SQL_COUNT_BY_FIRST_SUR, new Object[] {firstName,surName}, Integer.class);
+		return jdbcTemplate.queryForObject(SQL_COUNT_BY_FIRST_SUR, Integer.class, firstName,surName);
 	}
 	
 	private RowMapper<User> userRowMapper = ((rs, rowNum) -> {
@@ -77,5 +77,4 @@ public class UserRepositoryImpl implements UserRepository{
 				
 				});
 	
-
 }

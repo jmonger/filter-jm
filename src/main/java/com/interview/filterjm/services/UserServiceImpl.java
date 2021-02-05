@@ -4,6 +4,8 @@ import com.interview.filterjm.domain.User;
 import com.interview.filterjm.exceptions.UserException;
 import com.interview.filterjm.repositories.UserRepository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,7 +31,17 @@ public class UserServiceImpl implements UserService {
 			throw new UserException("User already exists.");
 		}
 		Integer id = userRepository.create(firstName, surName, role, age);
-		return userRepository.findById(id);
+		return userRepository.getUserById(id);
+	}
+
+	@Override
+	public List<User> getAllUsers() throws UserException {
+		return userRepository.getAllUsers();
+	}
+
+	@Override
+	public User getUserById(Integer id) throws UserException {
+		return userRepository.getUserById(id);
 	}
 
 }
