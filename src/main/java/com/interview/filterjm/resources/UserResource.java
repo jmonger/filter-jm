@@ -74,8 +74,4 @@ public class UserResource {
 		return new ResponseEntity<>(users, HttpStatus.OK);
 	}
 	
-	
-	
-	
-	
 }
