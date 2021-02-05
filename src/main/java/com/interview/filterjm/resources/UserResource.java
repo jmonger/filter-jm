@@ -50,6 +50,30 @@ public class UserResource {
 		return new ResponseEntity<>(users,HttpStatus.OK);
 	}
 	
+	@GetMapping("/first/{firstName}")
+	public ResponseEntity<List<User>> getUsersByFirstName(HttpServletRequest request, @PathVariable("firstName") String firstName) {
+		List<User> users = userService.getUsersByFirstName(firstName);
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
+	@GetMapping("/sur/{surName}")
+	public ResponseEntity<List<User>> getUsersBySurName(HttpServletRequest request, @PathVariable("surName") String surName) {
+		List<User> users = userService.getUsersBySurName(surName);
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
+	@GetMapping("/role/{role}")
+	public ResponseEntity<List<User>> getUsersByRole(HttpServletRequest request, @PathVariable("role") String role) {
+		List<User> users = userService.getUsersByRole(role);
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
+	@GetMapping("/age/{age}")
+	public ResponseEntity<List<User>> getUsersByAge(HttpServletRequest request, @PathVariable("age") Integer age) {
+		List<User> users = userService.getUsersByAge(age);
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+	
 	
 	
 	

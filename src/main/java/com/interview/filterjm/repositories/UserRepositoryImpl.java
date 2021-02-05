@@ -22,6 +22,13 @@ public class UserRepositoryImpl implements UserRepository{
 	private static final String SQL_COUNT_BY_FIRST_SUR = "select count(*) from users where firstname=? and surname=?";
 	private static final String SQL_FIND_BY_ID = "select id, firstname, surname, role, age from users where id=?";
 	private static final String SQL_GET_ALL = "select id, firstname, surname, role, age from users";
+	private static final String SQL_GET_BY_FIRST = "select id, firstname, surname, role, age from users where firstname=?";
+	private static final String SQL_GET_BY_SUR = "select id, firstname, surname, role, age from users where surname=?";
+	private static final String SQL_GET_BY_ROLE = "select id, firstname, surname, role, age from users where role=?";
+	private static final String SQL_GET_BY_AGE = "select id, firstname, surname, role, age from users where age=?";
+
+
+	
 	
 	
 	@Autowired
@@ -76,5 +83,26 @@ public class UserRepositoryImpl implements UserRepository{
 				rs.getInt("age"));
 				
 				});
+
+	@Override
+	public List<User> getUsersBySurName(String surName) throws UserException {
+		return jdbcTemplate.query(SQL_GET_BY_SUR, userRowMapper, surName);
+	}
+
+	@Override
+	public List<User> getUsersByAge(Integer age) throws UserException {
+		return jdbcTemplate.query(SQL_GET_BY_AGE, userRowMapper,age);
+	}
+
+	@Override
+	public List<User> getUsersByFirstName(String firstName) throws UserException {
+		return jdbcTemplate.query(SQL_GET_BY_FIRST, userRowMapper,firstName);
+	}
+
+	@Override
+	public List<User> getUsersByRole(String role) throws UserException {
+		return jdbcTemplate.query(SQL_GET_BY_ROLE, userRowMapper, role);
+	}
+
 	
 }

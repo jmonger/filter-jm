@@ -15,6 +15,15 @@ public interface UserService {
 	
 	User getUserById(Integer id) throws UserException;
 	
+	List<User> getUsersByFirstName(String firstName) throws UserException;
+	
+	List<User> getUsersBySurName(String surName) throws UserException;
+
+	List<User> getUsersByRole(String role) throws UserException;
+
+	List<User> getUsersByAge(Integer age) throws UserException;
+
+	
 	
 
 }

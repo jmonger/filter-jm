@@ -44,4 +44,24 @@ public class UserServiceImpl implements UserService {
 		return userRepository.getUserById(id);
 	}
 
+	@Override
+	public List<User> getUsersByFirstName(String firstName) throws UserException {
+		return userRepository.getUsersByFirstName(firstName);
+	}
+
+	@Override
+	public List<User> getUsersBySurName(String surName) throws UserException {
+		return userRepository.getUsersBySurName(surName);
+	}
+
+	@Override
+	public List<User> getUsersByRole(String role) throws UserException {
+		return userRepository.getUsersByRole(role);
+	}
+
+	@Override
+	public List<User> getUsersByAge(Integer age) throws UserException {
+		return userRepository.getUsersByAge(age);
+	}
+
 }

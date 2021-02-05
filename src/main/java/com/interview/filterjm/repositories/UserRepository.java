@@ -14,6 +14,14 @@ public interface UserRepository {
 	
 	List<User> getAllUsers() throws UserException;
 	
+	List<User> getUsersByFirstName(String firstName) throws UserException;
+	
+	List<User> getUsersBySurName(String surName) throws UserException;
+	
+	List<User> getUsersByRole(String role) throws UserException;
+
+	List<User> getUsersByAge(Integer age) throws UserException;
+	
 	User getUserById(Integer id) throws UserResourceNotFoundException;
 
 	Integer getCountByFirstNameAndSurname(String firstName, String surName) throws UserException;
